@@ -1,0 +1,16 @@
+# Production-style deployment. Configuration comes from .env
+# (copy .env.example to .env). For a local test setup see dev/.
+services:
+  registry-manager:
+    build: .
+    image: registry-manager:latest
+    restart: unless-stopped
+    ports:
+      - "38080:8080"
+    env_file:
+      - .env
+    # Only needed for deleting empty repositories (REGISTRY_STORAGE_PATH):
+    # run as the owner of the registry storage and mount it.
+    # user: "0:0"
+    # volumes:
+    #   - /path/to/registry/data:/var/lib/registry

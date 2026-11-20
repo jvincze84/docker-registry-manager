@@ -1,0 +1,37 @@
+# Local test environment: a throwaway registry + the app wired to it.
+#   docker compose -f dev/compose.yml up -d --build
+#   dev/seed.sh           # push test images
+#   open http://localhost:8099
+#   dev/smoke.sh          # headless browser smoke test
+#   docker compose -f dev/compose.yml down -v
+name: registry-manager-dev
+
+services:
+  registry:
+    image: registry:2
+    ports:
+      - "127.0.0.1:5055:5000"
+    environment:
+      REGISTRY_STORAGE_DELETE_ENABLED: "true"
+      # Out-of-band repository deletion needs the blob cache off (see CLAUDE.md).
+      REGISTRY_STORAGE_CACHE_BLOBDESCRIPTOR: disabled
+    volumes:
+      - registry-data:/var/lib/registry
+
+  app:
+    build: ..
+    image: registry-manager:dev
+    user: "0:0"   # registry:2 writes its storage as root
+    ports:
+      - "127.0.0.1:8099:8080"
+    environment:
+      REGISTRY_URL: http://registry:5000
+      REGISTRY_PUBLIC_HOST: localhost:5055
+      REGISTRY_STORAGE_PATH: /var/lib/registry
+    volumes:
+      - registry-data:/var/lib/registry
+    depends_on:
+      - registry
+
+volumes:
+  registry-data:
