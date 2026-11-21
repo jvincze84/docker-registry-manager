@@ -3,6 +3,16 @@
 A small web UI for a self-hosted Docker Registry v2: browse, search and delete images.
 Dark theme (switchable to light), installable as a PWA, ships as a single Docker container.
 
+## Screens
+
+<img width="1485" height="677" alt="opera_2by1wgpddx" src="https://github.com/user-attachments/assets/ba1088af-dd43-4347-82ec-5040f902e4db" />
+
+<img width="1331" height="301" alt="opera_QLiWg4Nx2Z" src="https://github.com/user-attachments/assets/416f333c-839c-47d6-adfd-5fa14115061d" />
+
+
+<img width="984" height="616" alt="opera_F28X5xEXnG" src="https://github.com/user-attachments/assets/c25619ec-77fe-4a9f-b485-02311bf39ac8" />
+
+
 ## Features
 
 - **Search** across all repositories and tags at once: `nginx`, `1.2`, or `repo:tag` (e.g. `busybox:1.`).
